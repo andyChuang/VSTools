@@ -6,16 +6,13 @@ from VSTools.build import MsBuild
 from subprocess import Popen, PIPE
 import os
 
-FrameworkVersionDic = {"v4.0.30319": r'C:\Windows\Microsoft.NET\Framework\v4.0.30319'}
+FrameworkVersionDic = {"v4.0.30319": r'C:\Windows\Microsoft.NET\Framework\v4.0.30319'}    
 
-def get_default_msbuild(debug=False):
-    return MsBuild(FrameworkVersionDic["v4.0.30319"] + r'\MSBuild.exe', debug)
+def get_msbuild(path, debug=False):
+    if path == '' or path is None:
+        return MsBuild(FrameworkVersionDic['v4.0.30319'] + r'\MSBuild.exe', debug)
+    return MsBuild(path + r'\MSBuild.exe', debug)
 
-def get_msbuild(version='v4.0.30319', debug=False):
-    return MsBuild(FrameworkVersionDic[version] + r'\MSBuild.exe', debug)
-	
-def add_msbuild_path(version, path):
-    FrameworkVersionDic[version] = path
 
 def deploy_copy(sourcepath, targetpath):
     if not os.path.isdir(sourcepath):
